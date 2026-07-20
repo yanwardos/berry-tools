@@ -139,7 +139,7 @@ app_license = "gpl-3.0"
 
 doc_events = {
 	"Employee Checkin": {
-        "after_insert": "berry_tools.events.employee_checkin_events.assign_work_on_checkin",
+        "after_insert": "berry_tools.berry_tools.events.employee_checkin_events.assign_work_on_checkin",
 		"on_update": "method",
 		"on_cancel": "method",
 		"on_trash": "method"
