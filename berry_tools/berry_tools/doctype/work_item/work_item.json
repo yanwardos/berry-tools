@@ -1,0 +1,90 @@
+{
+ "doctype": "DocType",
+ "name": "Work Item",
+ "module": "Berry Tools",
+ "custom": 0,
+ "istable": 0,
+ "editable_grid": 1,
+ "naming_rule": "By fieldname",
+ "autoname": "field:title",
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "frequency",
+   "fieldtype": "Select",
+   "label": "Frequency",
+   "options": "Daily\nWeekly\nMonthly",
+   "default": "Daily",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "weekday",
+   "fieldtype": "Select",
+   "label": "Weekday",
+   "options": "\nMonday\nTuesday\nWednesday\nThursday\nFriday\nSaturday\nSunday",
+   "depends_on": "eval:doc.frequency=='Weekly'",
+   "mandatory_depends_on": "eval:doc.frequency=='Weekly'"
+  },
+  {
+   "fieldname": "day_of_month",
+   "fieldtype": "Int",
+   "label": "Day of Month",
+   "depends_on": "eval:doc.frequency=='Monthly'",
+   "mandatory_depends_on": "eval:doc.frequency=='Monthly'",
+   "description": "1-31. If the month is shorter than this day, it fires on the last day of the month."
+  },
+  {
+   "fieldname": "capacity",
+   "fieldtype": "Int",
+   "label": "Capacity (slots per cycle)",
+   "default": 1,
+   "reqd": 1,
+   "in_list_view": 1,
+   "description": "How many times this item repeats in the day's rotation before cycling to the next item."
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Int",
+   "label": "Sort Order",
+   "default": 0,
+   "description": "Lower numbers appear earlier in the rotation."
+  },
+  {
+   "fieldname": "active",
+   "fieldtype": "Check",
+   "label": "Active",
+   "default": 1,
+   "in_list_view": 1
+  }
+ ],
+ "sort_field": "priority",
+ "sort_order": "ASC",
+ "permissions": [
+  {
+   "role": "HR Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1
+  },
+  {
+   "role": "HR User",
+   "read": 1,
+   "write": 1,
+   "create": 1
+  }
+ ]
+}
