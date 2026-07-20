@@ -4,6 +4,10 @@
 import frappe
 from frappe.utils import today, now_datetime, get_datetime
 
+# Flow:
+# Checkin
+# Check Active work item today
+
 
 def assign_work_on_checkin(doc, method):
 	"""
