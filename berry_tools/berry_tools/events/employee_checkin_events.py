@@ -31,7 +31,9 @@ def assign_work_on_checkin(doc, method):
 	assigned_so_far = count_assignments_today()
 	index = assigned_so_far % len(rotation)
 	work_item = rotation[index]
-
+	
+	doc.entry_task = work_item
+	doc.exit_task = work_item
 	create_work_todo(work_item, doc.employee, doc.name)
 
 
