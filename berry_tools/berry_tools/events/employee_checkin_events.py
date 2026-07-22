@@ -32,8 +32,6 @@ def assign_work_on_checkin(doc, method):
 	index = assigned_so_far % len(rotation)
 	work_item = rotation[index]
 	
-	doc.entry_task = work_item
-	doc.exit_task = work_item
 	create_work_todo(work_item, doc.employee, doc.name)
 
 
@@ -60,6 +58,7 @@ def build_todays_rotation():
 	"""
 	weekday_name = now_datetime().strftime("%A")  # e.g. "Monday"
 	day_of_month = now_datetime().day
+	today_num_on_year = int(now_datetime().strftime('%j'))
 
 	due_items = frappe.get_all(
 		"Work Item",
@@ -70,13 +69,13 @@ def build_todays_rotation():
 
 	rotation = []
 	for item in due_items:
-		if is_due_today(item, weekday_name, day_of_month):
+		if is_due_today(item, weekday_name, day_of_month, today_num_on_year):
 			rotation.extend([item.name] * max(item.capacity, 1))
 
 	return rotation
 
 
-def is_due_today(item, weekday_name, day_of_month):
+def is_due_today(item, weekday_name, day_of_month, today_num_on_year):
 	if item.frequency == "Daily":
 		return True
 	if item.frequency == "Weekly":
@@ -87,8 +86,10 @@ def is_due_today(item, weekday_name, day_of_month):
 		last_day = calendar.monthrange(now_datetime().year, now_datetime().month)[1]
 		target_day = min(item.day_of_month or 1, last_day)
 		return day_of_month == target_day
-	return False
+	if item.frequency == 'N-Day':
+		return (today_num_on_year % item.n_day) == 0
 
+	return False
 
 def count_assignments_today():
 	"""Total ToDos created today by this rotation logic (across all Work Items)."""
