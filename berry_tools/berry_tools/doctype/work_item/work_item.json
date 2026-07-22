@@ -97,13 +97,6 @@
             "label": "Preferred Hour End"
         },
         {
-            "fieldname": "preferred_grade",
-            "fieldtype": "Link",
-            "options": "Employee Grade",
-            "label": "Preferred Employee Grade",
-            "description": "Optional. If set, this item is only offered to employees of this grade; others are skipped to the next item in rotation."
-        },
-        {
             "fieldname": "active",
             "fieldtype": "Check",
             "label": "Active",
