@@ -7,9 +7,13 @@ def receive_checkin_device():
     attendance_log_type = data.get("attendance_log_type")
 
     if not attendance_device_id:
+        frappe.response.http_status_code = 422
+        frappe.response['message'] = "Invalid attendance device id."
         frappe.throw("attendance_device_id parameter is required.")
 
     if not attendance_log_type:
+        frappe.response.http_status_code = 422
+        frappe.response['message'] = "Invalid attendance log type."
         frappe.throw("attendance_log_type parameter is required.")
 
     employee = frappe.db.get_all("Employee", {"attendance_device_id": attendance_device_id}, ["*"])
